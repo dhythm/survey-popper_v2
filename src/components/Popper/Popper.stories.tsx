@@ -6,7 +6,12 @@ import { Popper } from "./Popper";
 export default {
   title: "Components/Popper",
   component: Popper,
-  //   argTypes: {},
+  argTypes: {
+    placement: {
+      options: ["bottom", "top", "right", "left"],
+      control: { type: "select" },
+    },
+  },
 } as ComponentMeta<typeof Popper>;
 
 const Template: ComponentStory<typeof Component> = (args) => (
@@ -24,7 +29,16 @@ const Component: FC<ComponentProps<typeof Popper>> = ({ ...props }) => {
   const id = open ? "simple-popper" : undefined;
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "calc(100vh - 16px * 2)",
+        backgroundColor: "#00000020",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <button aria-describedby={id} type="button" onClick={handleClick}>
         Toggle Popper
       </button>
@@ -39,27 +53,11 @@ const Component: FC<ComponentProps<typeof Popper>> = ({ ...props }) => {
 
 export const $Popper = Template.bind({});
 $Popper.args = {
-  placement: "bottom",
-  disablePortal: false,
   modifiers: [
     {
-      name: "flip",
-      enabled: true,
+      name: "offset",
       options: {
-        altBoundary: true,
-        rootBoundary: "document",
-        padding: 8,
-      },
-    },
-    {
-      name: "preventOverflow",
-      enabled: true,
-      options: {
-        altAxis: true,
-        altBoundary: true,
-        tether: true,
-        rootBoundary: "document",
-        padding: 8,
+        offset: [0, 8],
       },
     },
   ],
