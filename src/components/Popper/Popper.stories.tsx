@@ -6,7 +6,7 @@ import { Popper } from "./Popper";
 export default {
   title: "Components/Popper",
   component: Popper,
-  argTypes: {},
+  //   argTypes: {},
 } as ComponentMeta<typeof Popper>;
 
 const Template: ComponentStory<typeof Component> = (args) => (
@@ -38,3 +38,29 @@ const Component: FC<ComponentProps<typeof Popper>> = ({ ...props }) => {
 };
 
 export const $Popper = Template.bind({});
+$Popper.args = {
+  placement: "bottom",
+  disablePortal: false,
+  modifiers: [
+    {
+      name: "flip",
+      enabled: true,
+      options: {
+        altBoundary: true,
+        rootBoundary: "document",
+        padding: 8,
+      },
+    },
+    {
+      name: "preventOverflow",
+      enabled: true,
+      options: {
+        altAxis: true,
+        altBoundary: true,
+        tether: true,
+        rootBoundary: "document",
+        padding: 8,
+      },
+    },
+  ],
+};
