@@ -22,3 +22,13 @@ touch .prettierrc
 
 npm install --save-dev husky lint-staged concurrently
 ```
+
+## Install deps
+
+```sh
+npx storybook init
+
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+mpm install @popperjs/core
+```
