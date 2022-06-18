@@ -131,7 +131,13 @@ const Component: FC<
     },
   ];
   return (
-    <StyledPopper {...props} modifiers={modifiers} open transition>
+    <StyledPopper
+      {...props}
+      modifiers={modifiers}
+      open
+      transition
+      disablePortal
+    >
       {({ TransitionProps }) => (
         <Fade {...TransitionProps} timeout={350}>
           <Root>
@@ -155,7 +161,7 @@ const Root = styled.div`
   border-radius: 3px;
   border-width: 1px;
   padding: 2px;
-  border-color: #000000;
+  border-color: #dcdee0;
   box-shadow: 0px 0px 30px rgb(203 203 203 / 72%);
 `;
 

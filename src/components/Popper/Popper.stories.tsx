@@ -93,6 +93,42 @@ const Component: FC<
 > = ({ anchorEl, children }) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
+  const modifiers = [
+    {
+      name: "flip",
+      enabled: false,
+      options: {
+        altBoundary: true,
+        rootBoundary: "viewport",
+        padding: 8,
+      },
+    },
+    {
+      name: "preventOverflow",
+      enabled: true,
+      options: {
+        altAxis: true,
+        altBoundary: true,
+        tether: false,
+        rootBoundary: "viewport",
+        padding: 8,
+      },
+    },
+    {
+      name: "arrow",
+      enabled: true,
+      options: {
+        element: arrowRef,
+      },
+    },
+    {
+      name: "offset",
+      options: {
+        offset: [0, 12],
+      },
+    },
+  ];
+
   return (
     <div>
       <StyledPopper
@@ -100,42 +136,8 @@ const Component: FC<
         anchorEl={anchorEl}
         placement="bottom"
         transition
-        disablePortal={true}
-        modifiers={[
-          {
-            name: "flip",
-            enabled: false,
-            options: {
-              altBoundary: true,
-              rootBoundary: "viewport",
-              padding: 8,
-            },
-          },
-          {
-            name: "preventOverflow",
-            enabled: true,
-            options: {
-              altAxis: true,
-              altBoundary: true,
-              tether: false,
-              rootBoundary: "viewport",
-              padding: 8,
-            },
-          },
-          {
-            name: "arrow",
-            enabled: true,
-            options: {
-              element: arrowRef,
-            },
-          },
-          {
-            name: "offset",
-            options: {
-              offset: [0, 12],
-            },
-          },
-        ]}
+        disablePortal
+        modifiers={modifiers}
       >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} timeout={350}>
