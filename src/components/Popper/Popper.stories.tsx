@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { Box, Grow, Paper } from "@mui/material";
+import { ComponentMeta, Story } from "@storybook/react";
+import React, { ComponentProps, FC, ReactNode } from "react";
 import { Popper } from "./Popper";
-import React, { ComponentProps, FC, ReactNode, VFC } from "react";
-import { Box, Grow, Paper, Typography } from "@mui/material";
 
 export default {
   title: "Components/Popper",
@@ -13,7 +13,7 @@ export default {
       control: { type: "select" },
     },
   },
-} as ComponentMeta<typeof Popper & { arrow?: boolean }>;
+} as ComponentMeta<typeof Popper>;
 
 const color = "#ffffff";
 
