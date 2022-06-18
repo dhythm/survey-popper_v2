@@ -103,7 +103,9 @@ const Component: FC<
     {
       name: "arrow",
       enabled: true,
-      element: arrowRef,
+      options: {
+        element: arrowRef,
+      },
     },
     {
       name: "offset",
