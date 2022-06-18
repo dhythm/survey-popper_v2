@@ -17,67 +17,13 @@ export default {
 
 const color = "#ffffff";
 
-const StyledPopper = styled(Popper)`
-  z-index: 1;
-  &[data-popper-placement*='bottom'] .MuiPopper-arrow: {
-    top: 0;
-    left: 0;
-    margin-top: -0.71em;
-    margin-left: 4px;
-    margin-right: 4px;
-    &::before: {
-      border-width: 0 1em 1em 1em:
-      border-color: transparent transparent ${color} transparent;
-      transform-origin: 0 100%;
-    }
-  }
-  &[data-popper-placement*='top'] .MuiPopper-arrow: {
-    bottom: 0;
-    left: 0;
-    margin-bottom: -0.71em;
-    margin-left: 4px;
-    margin-right: 4px;
-    &::before: {
-      border-width: 1em 1em 0 1em;
-      border-color: ${color} transparent transparent transparent;
-      transform-origin: 100% 0;
-    }
-  }
-  &[data-popper-placement*='right'] .MuiPopper-arrow: {
-    left: 0;
-    margin-left: -0.71em;
-    height: 1em;
-    width: 0.71em;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    &::before: {
-      border-width: 1em 1em 1em 0;
-      border-color: transparent ${color} transparent transparent;
-      transform-origin: 100% 100%;
-    }
-  }
-  &[data-popper-placement*='left'] .MuiPopper-arrow: {
-      right: 0;
-      margin-right: -0.71em
-      height: 1em;
-      width: 0.71em;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      &::before: {
-        border-width: 1em 0 1em 1em;
-        border-color: transparent transparent transparent ${color};
-        transform-origin: 0 0;
-      }
-  }
-`;
-
 const Arrow = styled.div`
   position: absolute;
   width: 1em;
   height: 0.71em;
   box-sizing: border-box;
-  color: blue;
-  &::before: {
+  color: ${color};
+  &::before {
     content: "";
     margin: auto;
     display: block;
@@ -85,6 +31,52 @@ const Arrow = styled.div`
     height: 100%;
     background-color: currentColor;
     transform: rotate(45deg);
+  }
+`;
+
+const StyledPopper = styled(Popper)`
+  z-index: 1;
+  &[data-popper-placement*='bottom'] .arrow {
+    top: 0;
+    left: 0;
+    margin-top: -0.71em;
+    margin-left: 4px;
+    margin-right: 4px;
+    &::before {
+      transform-origin: 0 100%;
+    }
+  }
+  &[data-popper-placement*='top'] .arrow {
+    bottom: 0;
+    left: 0;
+    margin-bottom: -0.71em;
+    margin-left: 4px;
+    margin-right: 4px;
+    &::before {
+      transform-origin: 100% 0;
+    }
+  }
+  &[data-popper-placement*='right'] .arrow {
+    left: 0;
+    margin-left: -0.71em;
+    height: 1em;
+    width: 0.71em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    &::before {
+      transform-origin: 100% 100%;
+    }
+  }
+  &[data-popper-placement*='left'] .arrow {
+      right: 0;
+      margin-right: -0.71em
+      height: 1em;
+      width: 0.71em;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      &::before {
+        transform-origin: 0 0;
+      }
   }
 `;
 
@@ -153,7 +145,7 @@ const Component: FC<
               }}
             >
               <StyledPaper>
-                <Arrow ref={setArrowRef} />
+                <Arrow ref={setArrowRef} className="arrow" />
                 <Box sx={{ padding: "20px" }}>{children}</Box>
               </StyledPaper>
             </Paper>
