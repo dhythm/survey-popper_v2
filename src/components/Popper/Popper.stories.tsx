@@ -16,89 +16,87 @@ export default {
   },
 } as ComponentMeta<typeof Popper>;
 
-// const Popper = styled(MuiPopper, {
-//   shouldForwardProp: (prop) => prop !== "arrow",
-// })(({ theme, arrow }) => ({
-//   zIndex: 1,
-//   "& > div": {
-//     position: "relative",
-//   },
-//   '&[data-popper-placement*="bottom"]': {
-//     "& > div": {
-//       marginTop: arrow ? 2 : 0,
-//     },
-//     "& .MuiPopper-arrow": {
-//       top: 0,
-//       left: 0,
-//       marginTop: "-0.9em",
-//       width: "3em",
-//       height: "1em",
-//       "&::before": {
-//         borderWidth: "0 1em 1em 1em",
-//         borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
-//       },
-//     },
-//   },
-//   '&[data-popper-placement*="top"]': {
-//     "& > div": {
-//       marginBottom: arrow ? 2 : 0,
-//     },
-//     "& .MuiPopper-arrow": {
-//       bottom: 0,
-//       left: 0,
-//       marginBottom: "-0.9em",
-//       width: "3em",
-//       height: "1em",
-//       "&::before": {
-//         borderWidth: "1em 1em 0 1em",
-//         borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
-//       },
-//     },
-//   },
-//   '&[data-popper-placement*="right"]': {
-//     "& > div": {
-//       marginLeft: arrow ? 2 : 0,
-//     },
-//     "& .MuiPopper-arrow": {
-//       left: 0,
-//       marginLeft: "-0.9em",
-//       height: "3em",
-//       width: "1em",
-//       "&::before": {
-//         borderWidth: "1em 1em 1em 0",
-//         borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
-//       },
-//     },
-//   },
-//   '&[data-popper-placement*="left"]': {
-//     "& > div": {
-//       marginRight: arrow ? 2 : 0,
-//     },
-//     "& .MuiPopper-arrow": {
-//       right: 0,
-//       marginRight: "-0.9em",
-//       height: "3em",
-//       width: "1em",
-//       "&::before": {
-//         borderWidth: "1em 0 1em 1em",
-//         borderColor: `transparent transparent transparent ${theme.palette.background.paper}`,
-//       },
-//     },
-//   },
-// }));
+const StyledPopper = styled(Popper)`
+  z-index: 1;
+  & > div: {
+    position: relative;
+  }
+  &[data-popper-placement*='bottom']: {
+     & > div: {
+       margin-top: 2;
+     }
+     & .MuiPopper-arrow: {
+       top: 0;
+       left: 0;
+       margin-top: -0.9em;
+       width: 3em;
+       height: 1em;
+       &::before: {
+         border-width: 0 1em 1em 1em:
+         border-color: transparent transparent blue transparent;
+       }
+     }
+  }
+   &[data-popper-placement*='top']: {
+     & > div: {
+       margin-bottom: 2;
+     },
+     & .MuiPopper-arrow: {
+       bottom: 0;
+       left: 0;
+       margin-bottom: -0.9em;
+       width: 3em;
+       height: 1em;
+       &::before: {
+         border-width: 1em 1em 0 1em;
+         border-color: blue transparent transparent transparent;
+       }
+     }
+   }
+   &[data-popper-placement*='right']: {
+     & > div: {
+       margin-left: 2
+     }
+     & .MuiPopper-arrow: {
+       left: 0;
+       margin-left: -0.9em;
+       height: 3em;
+       width: 1em;
+       &::before: {
+         border-width: 1em 1em 1em 0;
+         border-color: transparent blue transparent transparent;
+       },
+     },
+   },
+   &[data-popper-placement*='left']: {
+     & > div {
+       margin-right: 2;
+     }
+     & .MuiPopper-arrow: {
+       right: 0;
+       margin-right: -0.9em;
+       height: 3em;
+       width: 1em;
+       &::before: {
+         border-width: 1em 0 1em 1em;
+         border-color: transparent transparent transparent blue;
+       }
+     }
+   }
+`;
 
 const Arrow = styled.div`
-   position: absolute
-   font-size: 7
-   width: 3em
-   height: 3em
+   position: absolute;
+   font-size: 7;
+   width: 3em;
+   height: 3em;
    &::before: {
-     content: ""
-     margin: auto
-     display: block
-     width: 0
-     height: 0
-     border-style: solid
+     content: "";
+     margin: auto;
+     display: block;
+     width: 0;
+     height: 0;
+     border-style: solid;
    },
 `;
 
@@ -112,7 +110,7 @@ const Template: ComponentStory<typeof Popper> = (args) => {
         <Target ref={setRef}>anchorEl</Target>
       </TargetArea>
       {ref && (
-        <Popper
+        <StyledPopper
           {...args}
           disablePortal={false}
           modifiers={[
@@ -149,13 +147,11 @@ const Template: ComponentStory<typeof Popper> = (args) => {
           open
           anchorEl={ref}
         >
-          <div>
-            <Paper elevation={3}>
-              <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
-            </Paper>
-            {/* <Arrow ref={setArrowRef} /> */}
-          </div>
-        </Popper>
+          <Paper elevation={3}>
+            <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
+          </Paper>
+          {/* <Arrow ref={setArrowRef} /> */}
+        </StyledPopper>
       )}
     </>
   );
