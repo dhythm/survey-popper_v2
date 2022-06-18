@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { useState } from "react";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { Popper } from "./Popper";
 import React from "react";
-import { Fade, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 export default {
   title: "Components/Popper",
@@ -13,8 +12,11 @@ export default {
       options: ["bottom", "top", "right", "left"],
       control: { type: "select" },
     },
+    arrow: {
+      control: "boolean",
+    },
   },
-} as ComponentMeta<typeof Popper>;
+} as ComponentMeta<typeof Popper & { arrow?: boolean }>;
 
 const StyledPopper = styled(Popper)`
   z-index: 1;
@@ -100,7 +102,10 @@ const Arrow = styled.div`
    },
 `;
 
-const Template: ComponentStory<typeof Popper> = (args) => {
+const Template: Story<
+  React.ComponentProps<typeof Popper> & { arrow?: boolean }
+  // eslint-disable-next-line react/prop-types
+> = ({ arrow, ...args }) => {
   const [ref, setRef] = React.useState<HTMLDivElement | null>(null);
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
@@ -150,7 +155,7 @@ const Template: ComponentStory<typeof Popper> = (args) => {
           <Paper elevation={3}>
             <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
           </Paper>
-          {/* <Arrow ref={setArrowRef} /> */}
+          {arrow && <Arrow ref={setArrowRef} />}
         </StyledPopper>
       )}
     </>
@@ -171,4 +176,5 @@ const Target = styled.div`
 export const $Popper = Template.bind({});
 $Popper.args = {
   placement: "bottom",
+  arrow: false,
 };
