@@ -1,6 +1,5 @@
 import {
   Box,
-  ClickAwayListener,
   Grow,
   Paper,
   Popper,
@@ -104,7 +103,6 @@ export const ArrowPopper = ({
   open,
   content,
   anchorEl,
-  children,
 }: Props) => {
   const classes = useStyles();
   const [arrowRef, setArrowRef] = React.useState<HTMLElement | null>(null);
@@ -144,6 +142,12 @@ export const ArrowPopper = ({
             enabled: true,
             options: {
               element: arrowRef,
+            },
+          },
+          {
+            name: "offset",
+            options: {
+              offset: [0, 12],
             },
           },
         ]}

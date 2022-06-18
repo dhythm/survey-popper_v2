@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { Popper } from "./Popper";
-import React from "react";
-import { Paper, Typography } from "@mui/material";
+import React, { ComponentProps, FC, ReactNode, VFC } from "react";
+import { Box, Grow, Paper, Typography } from "@mui/material";
 
 export default {
   title: "Components/Popper",
@@ -12,102 +12,160 @@ export default {
       options: ["bottom", "top", "right", "left"],
       control: { type: "select" },
     },
-    arrow: {
-      control: "boolean",
-    },
   },
 } as ComponentMeta<typeof Popper & { arrow?: boolean }>;
 
+const color = "#ffffff";
+
 const StyledPopper = styled(Popper)`
   z-index: 1;
-  & > div: {
-    position: relative;
+  &[data-popper-placement*='bottom'] .MuiPopper-arrow: {
+    top: 0;
+    left: 0;
+    margin-top: -0.71em;
+    margin-left: 4px;
+    margin-right: 4px;
+    &::before: {
+      border-width: 0 1em 1em 1em:
+      border-color: transparent transparent ${color} transparent;
+      transform-origin: 0 100%;
+    }
   }
-  &[data-popper-placement*='bottom']: {
-     & > div: {
-       margin-top: 2;
-     }
-     & .MuiPopper-arrow: {
-       top: 0;
-       left: 0;
-       margin-top: -0.9em;
-       width: 3em;
-       height: 1em;
-       &::before: {
-         border-width: 0 1em 1em 1em:
-         border-color: transparent transparent blue transparent;
-       }
-     }
+  &[data-popper-placement*='top'] .MuiPopper-arrow: {
+    bottom: 0;
+    left: 0;
+    margin-bottom: -0.71em;
+    margin-left: 4px;
+    margin-right: 4px;
+    &::before: {
+      border-width: 1em 1em 0 1em;
+      border-color: ${color} transparent transparent transparent;
+      transform-origin: 100% 0;
+    }
   }
-   &[data-popper-placement*='top']: {
-     & > div: {
-       margin-bottom: 2;
-     },
-     & .MuiPopper-arrow: {
-       bottom: 0;
-       left: 0;
-       margin-bottom: -0.9em;
-       width: 3em;
-       height: 1em;
-       &::before: {
-         border-width: 1em 1em 0 1em;
-         border-color: blue transparent transparent transparent;
-       }
-     }
-   }
-   &[data-popper-placement*='right']: {
-     & > div: {
-       margin-left: 2
-     }
-     & .MuiPopper-arrow: {
-       left: 0;
-       margin-left: -0.9em;
-       height: 3em;
-       width: 1em;
-       &::before: {
-         border-width: 1em 1em 1em 0;
-         border-color: transparent blue transparent transparent;
-       },
-     },
-   },
-   &[data-popper-placement*='left']: {
-     & > div {
-       margin-right: 2;
-     }
-     & .MuiPopper-arrow: {
-       right: 0;
-       margin-right: -0.9em;
-       height: 3em;
-       width: 1em;
-       &::before: {
-         border-width: 1em 0 1em 1em;
-         border-color: transparent transparent transparent blue;
-       }
-     }
-   }
+  &[data-popper-placement*='right'] .MuiPopper-arrow: {
+    left: 0;
+    margin-left: -0.71em;
+    height: 1em;
+    width: 0.71em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    &::before: {
+      border-width: 1em 1em 1em 0;
+      border-color: transparent ${color} transparent transparent;
+      transform-origin: 100% 100%;
+    }
+  }
+  &[data-popper-placement*='left'] .MuiPopper-arrow: {
+      right: 0;
+      margin-right: -0.71em
+      height: 1em;
+      width: 0.71em;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      &::before: {
+        border-width: 1em 0 1em 1em;
+        border-color: transparent transparent transparent ${color};
+        transform-origin: 0 0;
+      }
+  }
 `;
 
 const Arrow = styled.div`
-   position: absolute;
-   font-size: 7;
-   width: 3em;
-   height: 3em;
-   &::before: {
-     content: "";
-     margin: auto;
-     display: block;
-     width: 0;
-     height: 0;
-     border-style: solid;
-   },
+  position: absolute;
+  width: 1em;
+  height: 0.71em;
+  box-sizing: border-box;
+  color: blue;
+  &::before: {
+    content: "";
+    margin: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    transform: rotate(45deg);
+  }
 `;
 
-const Template: Story<
-  React.ComponentProps<typeof Popper> & { arrow?: boolean }
-  // eslint-disable-next-line react/prop-types
-> = ({ arrow, ...args }) => {
-  const [ref, setRef] = React.useState<HTMLDivElement | null>(null);
+const StyledPaper = styled(Paper)`
+  background-color: ${color};
+  max-width: 500px
+  filter: drop-shadow(0px 0px 30px rgba(203,203,203,0.72));
+  border-radius: 10px;
+  box-shadow: 0px 0px 30px rgb(203 203 203 / 72%);
+`;
+
+const Component: FC<
+  ComponentProps<typeof Popper> & { children: ReactNode }
+> = ({ anchorEl, children }) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
+
+  return (
+    <div>
+      <StyledPopper
+        open
+        anchorEl={anchorEl}
+        placement="bottom"
+        transition
+        disablePortal={true}
+        modifiers={[
+          {
+            name: "flip",
+            enabled: false,
+            options: {
+              altBoundary: true,
+              rootBoundary: "viewport",
+              padding: 8,
+            },
+          },
+          {
+            name: "preventOverflow",
+            enabled: true,
+            options: {
+              altAxis: true,
+              altBoundary: true,
+              tether: false,
+              rootBoundary: "viewport",
+              padding: 8,
+            },
+          },
+          {
+            name: "arrow",
+            enabled: true,
+            options: {
+              element: arrowRef,
+            },
+          },
+          {
+            name: "offset",
+            options: {
+              offset: [0, 12],
+            },
+          },
+        ]}
+      >
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps} timeout={350}>
+            <Paper
+              sx={{
+                boxShadow: "none",
+              }}
+            >
+              <StyledPaper>
+                <Arrow ref={setArrowRef} />
+                <Box sx={{ padding: "20px" }}>{children}</Box>
+              </StyledPaper>
+            </Paper>
+          </Grow>
+        )}
+      </StyledPopper>
+    </div>
+  );
+};
+
+const Template: Story<React.ComponentProps<typeof Popper>> = (args) => {
+  const [ref, setRef] = React.useState<HTMLDivElement | null>(null);
 
   return (
     <>
@@ -115,48 +173,9 @@ const Template: Story<
         <Target ref={setRef}>anchorEl</Target>
       </TargetArea>
       {ref && (
-        <StyledPopper
-          {...args}
-          disablePortal={false}
-          modifiers={[
-            { name: "offset", options: { offset: [0, 12] } },
-            {
-              name: "flip",
-              enabled: true,
-              options: {
-                altBoundary: true,
-                rootBoundary: "document",
-                padding: 8,
-              },
-            },
-            {
-              name: "preventOverflow",
-              enabled: false,
-              options: {
-                altAxis: false,
-                altBoundary: false,
-                tether: false,
-                rootBoundary: "document",
-                padding: 8,
-              },
-            },
-            {
-              name: "arrow",
-              enabled: true,
-              options: {
-                padding: 5,
-                element: arrowRef,
-              },
-            },
-          ]}
-          open
-          anchorEl={ref}
-        >
-          <Paper elevation={3}>
-            <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
-          </Paper>
-          {arrow && <Arrow ref={setArrowRef} />}
-        </StyledPopper>
+        <Component anchorEl={ref} {...args}>
+          <p>The content of the Popper.</p>
+        </Component>
       )}
     </>
   );
@@ -176,5 +195,4 @@ const Target = styled.div`
 export const $Popper = Template.bind({});
 $Popper.args = {
   placement: "bottom",
-  arrow: false,
 };
